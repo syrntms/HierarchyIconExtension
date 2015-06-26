@@ -1,33 +1,32 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
 
 [InitializeOnLoad]
-public class MissingScriptIconExtension : HierarchyIconFeatureBase {
+public class MissingScriptIconExtension : IHierarchyIconExtensionFeature {
 
 	private static Texture2D iconTexture;
 
 	static MissingScriptIconExtension()
 	{
-		HierarchyIconExtension.Extensions.Add(new MissingScriptIconExtension());
-		iconTexture = AssetDatabase.LoadAssetAtPath ("Assets/Editor/Feature/Alice.png", typeof(Texture2D)) as Texture2D;
+		HierarchyIconExtension.AddExtension(new MissingScriptIconExtension());
+		iconTexture = AssetDatabase.LoadAssetAtPath(
+			"Assets/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Alice.png",
+			typeof(Texture2D)
+		) as Texture2D;
 	}
 
-	public override int GetPriority()
+	public int GetPriority()
 	{
 		return 0;
 	}
 
-	public override Texture2D GetIconTexture()
-	{
-		return iconTexture;
-	}
-
-	public override bool IsDisplayIcon(GameObject go)
+	public Texture2D GetDisplayIcon(GameObject go)
 	{
 		var components = go.GetComponents<Component>();
-		return components.Any(component => component == null);
+		bool isDisplay = components.Any(component => component == null);
+		return isDisplay ? iconTexture : null;
 	}
 
 }
