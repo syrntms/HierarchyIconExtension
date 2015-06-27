@@ -6,7 +6,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 [InitializeOnLoad]
-public class HierarchyIconExtension {
+public class HierarchyIconExtension
+{
 
 	private static List<IHierarchyIconExtensionFeature> extensions = new List<IHierarchyIconExtensionFeature>();
 	private static Dictionary<int, HierarchyGameObjectIconData> instanceIdToIconData = new Dictionary<int, HierarchyGameObjectIconData>();
@@ -73,7 +74,7 @@ public class HierarchyIconExtension {
 		}
 
 		Rect r = new Rect(selectionRect); 
-		r.x = r.width;
+		r.x = r.xMax;
 
 		foreach (var icon in data.IconList) {
 			r.x -= 18;

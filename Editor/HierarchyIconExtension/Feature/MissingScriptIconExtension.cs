@@ -24,9 +24,24 @@ public class MissingScriptIconExtension : IHierarchyIconExtensionFeature {
 
 	public Texture2D GetDisplayIcon(GameObject go)
 	{
+		bool ret = HasMissingScript(go);
+		return ret ? iconTexture : null;
+	}
+
+	public bool HasMissingScript(GameObject go)
+	{
 		var components = go.GetComponents<Component>();
 		bool isDisplay = components.Any(component => component == null);
-		return isDisplay ? iconTexture : null;
+		if (isDisplay) {
+			return true;
+		}
+		foreach (var child in go.transform.Cast<Transform>()) {
+			bool ret = HasMissingScript(child.gameObject);
+			if (ret) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }
