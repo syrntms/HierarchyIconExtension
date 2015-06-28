@@ -10,9 +10,9 @@ public class MissingScriptIconExtension : IHierarchyIconExtensionFeature {
 
 	static MissingScriptIconExtension()
 	{
-		HierarchyIconExtension.AddExtension(new MissingScriptIconExtension());
+		HierarchyIconExtensionList.AddExtension(new MissingScriptIconExtension());
 		iconTexture = AssetDatabase.LoadAssetAtPath(
-			"Assets/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Alice.png",
+			"Assets/Exclude/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Alice.png",
 			typeof(Texture2D)
 		) as Texture2D;
 	}

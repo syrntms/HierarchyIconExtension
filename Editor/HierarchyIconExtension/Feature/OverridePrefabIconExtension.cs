@@ -11,9 +11,9 @@ public class OverridePrefabIconExtension : IHierarchyIconExtensionFeature {
 
 	static OverridePrefabIconExtension()
 	{
-		HierarchyIconExtension.AddExtension(new OverridePrefabIconExtension());
+		HierarchyIconExtensionList.AddExtension(new OverridePrefabIconExtension());
 		iconTexture = AssetDatabase.LoadAssetAtPath(
-			"Assets/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Bob.png",
+			"Assets/Exclude/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Bob.png",
 			typeof(Texture2D)
 		) as Texture2D;
 	}
@@ -45,7 +45,7 @@ public class OverridePrefabIconExtension : IHierarchyIconExtensionFeature {
 
 		//foreach is for avoiding crash to serialize ugui classes version_uity_4.6.3
 		foreach (var component in components) {
-			if (component is Transform) {
+			if (component is Transform || component == null) {
 				continue;
 			}
 			var serializedObject = new SerializedObject(component);
@@ -93,7 +93,6 @@ public class OverridePrefabIconExtension : IHierarchyIconExtensionFeature {
 			}
 
 			if (iterator.prefabOverride) {
-				Debug.Log(iterator.name);
 				return true;
 			}
 		}

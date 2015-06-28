@@ -9,7 +9,6 @@ using System.Collections.Generic;
 public class HierarchyIconExtension
 {
 
-	private static List<IHierarchyIconExtensionFeature> extensions = new List<IHierarchyIconExtensionFeature>();
 	private static Dictionary<int, HierarchyGameObjectIconData> instanceIdToIconData = new Dictionary<int, HierarchyGameObjectIconData>();
 
 	static HierarchyIconExtension()
@@ -18,35 +17,12 @@ public class HierarchyIconExtension
 		EditorApplication.hierarchyWindowItemOnGUI += onDrawHierarchyGameObject;
 	}
 
-	public static void AddExtension(IHierarchyIconExtensionFeature feature)
-	{
-		bool isExist = extensions.Any(ext => feature.GetType() == ext.GetType());
-		if (isExist) {
-			return;
-		}
-		extensions.Add(feature);
-		extensions = extensions.OrderBy(ext => ext.GetPriority()).ToList();
-	}
-
-	public static void RemoveExtension(IHierarchyIconExtensionFeature feature)
-	{
-		for (int i = 0 ; i < extensions.Count ; ++i) {
-			bool isSameType = extensions[i].GetType() == feature.GetType();
-			if (!isSameType) {
-				continue;
-			}
-			extensions.RemoveAt(i);
-			break;
-		}
-	}
-
 	private static void onUpdateHierarchy()
 	{
 		GameObject[] gameObjects = GameObject.FindObjectsOfType<GameObject>() as GameObject[];
-		IEnumerable<IHierarchyIconExtensionFeature> sortedList = extensions.OrderBy(ext => ext.GetPriority());
 		instanceIdToIconData.Clear();
 
-		foreach (var extension in sortedList) {
+		foreach (var extension in HierarchyIconExtensionList.WorkingExtensions) {
 			foreach (var go in gameObjects) {
 				var iconTexture = extension.GetDisplayIcon(go);
 				if (iconTexture == null) {
