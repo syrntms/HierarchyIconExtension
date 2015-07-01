@@ -117,12 +117,7 @@ public class OverridePrefabIconExtension : IHierarchyIconExtensionFeature {
 					continue;
 				}
 
-				if (!iterator.isInstantiatedPrefab) {
-					return true;
-				}
-
 				if (iterator.prefabOverride) {
-					Debug.Log(iterator.name);
 					return true;
 				}
 			}
