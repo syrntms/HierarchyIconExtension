@@ -13,7 +13,7 @@ public class OverridePrefabIconExtension : IHierarchyIconExtensionFeature {
 	{
 		HierarchyIconExtensionList.AddExtension(new OverridePrefabIconExtension());
 		iconTexture = AssetDatabase.LoadAssetAtPath(
-			"Assets/Exclude/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Bob.png",
+			"Assets/HierarchyIconExtension/Editor/HierarchyIconExtension/Feature/Bob.png",
 			typeof(Texture2D)
 		) as Texture2D;
 	}
