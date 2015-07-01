@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEditor;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 
 [InitializeOnLoad]
 public class MissingScriptIconExtension : IHierarchyIconExtensionFeature {
 
 	private static Texture2D iconTexture;
+	private static Dictionary<int, Texture2D> instnceIdToTexture = new Dictionary<int, Texture2D>();
 
 	static MissingScriptIconExtension()
 	{
@@ -22,9 +24,9 @@ public class MissingScriptIconExtension : IHierarchyIconExtensionFeature {
 		return 0;
 	}
 
-	public Texture2D GetDisplayIcon(GameObject go)
+	public Texture2D GetDisplayIcon(int instanceId)
 	{
-		bool ret = HasMissingScript(go);
+		bool ret = HasMissingScript(EditorUtility.InstanceIDToObject(instanceId) as GameObject);
 		return ret ? iconTexture : null;
 	}
 
